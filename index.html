@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oprix - Revolutionizing AI Cloud Operations</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #e0e0ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Change to flex-start to align content from the top */
+            min-height: 100vh;
+            text-align: center;
+            padding: 0 15px;
+            overflow-y: auto; /* Enable scrolling if content overflows */
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 2rem 0; /* Add spacing to ensure proper alignment */
+            color: #ffffff;
+            animation: fadeIn 2s ease-out;
+            text-shadow: 0 0 15px #6c63ff, 0 0 30px #8a85ff;
+        }
+
+        .intro {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #d1d1f5;
+            line-height: 1.8;
+            animation: fadeIn 2.5s ease-out;
+        }
+
+        .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: #ffffff;
+            background: linear-gradient(90deg, #6c63ff, #8a85ff);
+            border-radius: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), 0 0 20px #8a85ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: pulse 2s infinite;
+            margin-top: 2rem;
+        }
+
+        .cta:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 25px #8a85ff;
+        }
+
+        .form-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 30, 60, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 20px #6c63ff;
+            animation: slideDown 0.5s ease-out;
+            width: 90%;
+            max-width: 400px;
+            z-index: 1000;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid #6c63ff;
+            border-radius: 10px;
+            background: #1c1c3d;
+            color: #f5f5ff;
+            font-size: 1rem;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 0.75rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ffffff;
+            background: linear-gradient(90deg, #6c63ff, #8a85ff);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 15px #8a85ff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-container button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5), 0 0 20px #8a85ff;
+        }
+
+        .form-container .close-button {
+            position: absolute;
+            top: -10px; /* Position above the form box */
+            right: -10px; /* Positioned slightly outside the box */
+            background: #6c63ff; /* Button background for better visibility */
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 50%; /* Circular button */
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5), 0 0 10px #8a85ff;
+            z-index: 10;
+        }
+
+        .form-container .close-button:hover {
+            background: #8a85ff;
+            color: #ffffff;
+        }
+
+        .success-message {
+            display: none;
+            color: #8a85ff;
+            margin-top: 1rem;
+        }
+
+        .form-container textarea {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid #6c63ff;
+            border-radius: 10px;
+            background: #1c1c3d;
+            color: #f5f5ff;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        footer {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #b3b3d1;
+        }
+
+        footer a {
+            color: #6c63ff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function toggleForm() {
+            const formContainer = document.querySelector('.form-container');
+            const overlay = document.querySelector('.overlay');
+            formContainer.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            fetch("https://docs.google.com/forms/d/e/1FAIpQLSfeBGs8qbbdt6qZiOiErKUGt_yjxqYq8ssq5B9zYqcs2QjKyQ/formResponse", {
+                method: "POST",
+                body: formData,
+                mode: "no-cors",
+            })
+                .then(() => {
+                    document.querySelector('.success-message').style.display = 'block';
+                    setTimeout(() => {
+                        document.querySelector('.success-message').style.display = 'none';
+                        toggleForm();
+                    }, 3000);
+                })
+                .catch(() => {
+                    alert("An error occurred. Please try again.");
+                });
+
+            event.target.reset();
+        }
+
+        document.addEventListener('click', (event) => {
+            const formContainer = document.querySelector('.form-container');
+            const overlay = document.querySelector('.overlay');
+            if (formContainer.classList.contains('active') && !formContainer.contains(event.target) && event.target.className !== 'cta') {
+                toggleForm();
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Oprix</h1>
+    <div class="intro">
+        <p>Imagine a world where your cloud operations evolve at the speed of AI. A world where R&D's ambitions are no longer constrained by bottlenecks, and DevOps is an enabler of innovation, not a gatekeeper.<br>
+        <p>At Oprix, we’re creating an AI-powered DevOps platform designed to redefine how teams build, deploy, and scale. By seamlessly bridging the gap between R&D’s creativity and DevOps infrastructure, we’re making it possible to launch sandboxes effortlessly, deploy with confidence, and empower teams to move fast without unnecessary complexity.</p>
+        <!-- <p>With AI handling the heavy lifting, approvals become smoother, deployments quicker, and collaboration effortless. DevOps teams can focus on enabling innovation rather than being held back by process.</p> -->
+        <p>The future isn’t just coming—it’s here, and we’re crafting it for you.</p>
+    </div>
+    <button class="cta" onclick="toggleForm()">Let’s Build the Future Together</button>
+
+    <div class="overlay"></div>
+
+    <div class="form-container">
+        <button class="close-button" onclick="toggleForm()">X</button>
+        <form onsubmit="handleSubmit(event)">
+            <input type="text" name="entry.1973101580" placeholder="Your Name" required>
+            <input type="text" name="entry.667362220" placeholder="Your Role" required>
+            <input type="text" name="entry.404879903" placeholder="Your Company" required>
+            <input type="email" name="entry.311700095" placeholder="Your Email" required>
+            <textarea name="entry.1436313876" placeholder="Share your thoughts here... (optional)" rows="4" style="resize: none;"></textarea>
+            <button type="submit">Submit</button>
+        </form>
+        <p class="success-message">Thank you! Your submission has been received.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Oprix. All rights reserved. Built with care and precision.</p>
+    </footer>
+</body>
+
+</html>
